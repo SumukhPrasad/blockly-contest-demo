@@ -1,3 +1,30 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+      "browser": true,
+      "commonjs": true,
+      "node": true,
+      "es2021": true
+  },
+  "extends": "next/core-web-vitals",
+  "parserOptions": {
+      "ecmaVersion": 13
+  },
+  "rules": {
+      "indent": [
+          "error",
+          "tab"
+      ],
+      "linebreak-style": [
+          "error",
+          "unix"
+      ],
+      "quotes": [
+          "error",
+          "single"
+      ],
+      "semi": [
+          "error",
+          "always"
+      ]
+  }
 }
