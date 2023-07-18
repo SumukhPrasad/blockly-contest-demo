@@ -4,42 +4,16 @@
 import { useState } from "react";
 import { BlocklyWorkspace } from 'react-blockly';
 import styles from '../../styles/blockly.module.sass'
+import blocks from "../lib-internal/blocks";
+
+
 
 function BlocklyEditor() {
   let [xml, setXml] = useState();
 
   let toolboxConfiguration = {
      "kind": "categoryToolbox",
-     "contents": [
-       {
-         "kind": "category",
-         "name": "Control",
-         "contents": [
-           {
-             "kind": "block",
-             "type": "controls_if"
-           },
-         ]
-       },
-       {
-         "kind": "category",
-         "name": "Logic",
-         "contents": [
-           {
-             "kind": "block",
-             "type": "logic_compare"
-           },
-           {
-             "kind": "block",
-             "type": "logic_operation"
-           },
-           {
-             "kind": "block",
-             "type": "logic_boolean"
-           }
-         ]
-       }
-     ]
+     "contents": blocks
    };
 
    let workspaceConfiguration = {collapse : false, 
@@ -49,10 +23,11 @@ function BlocklyEditor() {
     trashcan : true, 
     horizontalLayout : true, 
     toolboxPosition : 'end',
+    renderer: "zelos",
     grid : {
       spacing : 20, 
-      length : -30, 
-      colour : '#555', 
+      length : 3, 
+      colour : '#ddd', 
       snap : false
     }, 
     zoom : {
@@ -70,6 +45,8 @@ function BlocklyEditor() {
       className={styles.editor} // you can use whatever classes are appropriate for your app's CSS
       toolboxConfiguration={toolboxConfiguration} // this must be a JSON toolbox definition
       workspaceConfiguration={workspaceConfiguration}
+      initialXml={xml}
+      onXmlChange={setXml}
     />
   )
 }
