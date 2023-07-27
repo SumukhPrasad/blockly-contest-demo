@@ -4,17 +4,15 @@
 import { useState } from "react";
 import { BlocklyWorkspace } from 'react-blockly';
 import styles from '../../styles/blockly.module.sass'
+
 import blocks from "../lib-internal/blocks";
-
-
+import "../lib-internal/blockDefs";
+import Blockly from "blockly";
 
 function BlocklyEditor() {
   let [xml, setXml] = useState();
 
-  let toolboxConfiguration = {
-     "kind": "categoryToolbox",
-     "contents": blocks
-   };
+  let toolboxConfiguration = blocks;
 
    let workspaceConfiguration = {collapse : false, 
     comments : true, 
