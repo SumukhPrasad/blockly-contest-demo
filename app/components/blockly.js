@@ -7,36 +7,14 @@ import styles from '../../styles/blockly.module.sass'
 
 import blocks from "../lib-internal/blocks";
 import "../lib-internal/blockDefs";
-import Blockly from "blockly";
+import workspaceConfiguration from "../lib-internal/workspaceConfig";
+
+
 
 function BlocklyEditor() {
   let [xml, setXml] = useState();
 
   let toolboxConfiguration = blocks;
-
-   let workspaceConfiguration = {collapse : false, 
-    comments : true, 
-    disable : true, 
-    maxBlocks : Infinity, 
-    trashcan : true, 
-    horizontalLayout : true, 
-    toolboxPosition : 'end',
-    renderer: "zelos",
-    grid : {
-      spacing : 20, 
-      length : 3, 
-      colour : '#ddd', 
-      snap : false
-    }, 
-    zoom : {
-      controls : true, 
-      wheel : true, 
-      startScale : 1, 
-      maxScale : 3, 
-      minScale : 0.3, 
-      scaleSpeed : 1.2
-    }
-   }
 
   return (
     <BlocklyWorkspace
