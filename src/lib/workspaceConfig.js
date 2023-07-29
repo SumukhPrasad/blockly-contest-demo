@@ -6,7 +6,7 @@ const workspaceConfiguration = {
      trashcan : true, 
      horizontalLayout : true, 
      toolboxPosition : 'end',
-     /*renderer: "zelos",*/
+     renderer: "zelos",
      grid : {
           spacing : 20, 
           length : 3, 

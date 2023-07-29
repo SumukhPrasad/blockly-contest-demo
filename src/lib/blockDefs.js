@@ -5,16 +5,18 @@ Blockly.Blocks['maze_move'] = {
   init: function () {
      this
           .appendDummyInput()
-          .appendField(new Blockly.FieldLabelSerializable("move"), "NAME")
-          .appendField(new Blockly.FieldNumber(1, 1, 10), "steps")
-          .appendField(new Blockly.FieldLabelSerializable("steps"), "NAME_END")
-          .appendField(new Blockly.FieldDropdown([["forward","forward"], ["forward","backward"]]), "dir");
-     this.setInputsInline(true);
+          .appendField(new Blockly.FieldLabelSerializable("take step forward"), "NAME")
+     this.setInputsInline(false);
+     this.setPreviousStatement(true, null);
+     this.setNextStatement(true, null);
      this.setColour("#5CA699");
      this.setTooltip("");
      this.setHelpUrl("");
   }
 };
+javascriptGenerator['maze_move'] = function(block) {
+     return `console.log('blockly_debug at block_id_${block.id}: move ');\n`;
+}
 
 Blockly.Blocks['maze_turn'] = {
   init: function () {
