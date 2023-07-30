@@ -30,12 +30,12 @@ class MazeBoard {
 
 
 	updateHeading(newHeading) {
-		this.heading = newHeading;
+		this.heading = ((newHeading % 4) ? newHeading % 4 : 4);
 		this.__updateState();
 	}
 
 	move() {
-		if (!__isNextMoveLegal()) return false;
+		if (!this.__isNextMoveLegal()) return false;
 
 		this.current_c = this.__getNextMovePos();
 		this.__updateState();

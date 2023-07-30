@@ -17,6 +17,8 @@
      import workspaceConfiguration from "../lib/workspaceConfig.js";
      import MazeBoard from "../lib/maze";
 
+     import { browser } from '$app/environment';
+
      var cmaze = new MazeBoard([[0, 0, 0, 0, 0, 0, 0, 0],
      [0, 1, 1, 0, 3, 0, 1, 0],
      [0, 1, 1, 0, 1, 1, 1, 0],
@@ -27,7 +29,9 @@
      [0, 0, 0, 0, 0, 0, 0, 0]]);
 
      var btVal = cmaze.__getBoardText();
-     cmaze.updateCallback = (function () {btVal = cmaze.__getBoardText()})
+     cmaze.updateCallback = (function () {btVal = cmaze.__getBoardText()});
+
+     if (browser) window.globalMazeObject = cmaze;
 
      const toolbox = blocks;
      var config = workspaceConfiguration;
@@ -43,6 +47,15 @@
                // Blockly will quickly recover from this, so it's not a big deal.
                // Just make sure the app doesn't crash until then.
                console.log(_err);
+          }
+     }
+
+     function execute() {
+          try {
+               eval(code)
+          } catch (_err) {
+               console.error(_err);
+               window.alert('CATASTROPHIC ERROR!'+_err)
           }
      }
 </script>
@@ -72,6 +85,9 @@
      -----<br />
           {@html btVal}
      -----<br />
+     <b>generated code</b><br />
+     {code != "" ? code : "no generated code" }<br />
+     <button on:click={() => execute()}>EXECUTE</button>
      </div>
 </div>
 
@@ -88,11 +104,18 @@
           padding: 10px
           border-radius: 10px
           background-color: rgba(0, 0, 0, 0.5)
-          bottom: 50px
+          top: 50px
           right: 50px
           color: white
           text-shadow: 0px 1px #000
 
      .monospace
           font-family: monospace
+
+     button
+          background-color: red
+          color: white
+          font-weight: bold
+          font-family: monospace
+          margin-top: 20px
 </style>

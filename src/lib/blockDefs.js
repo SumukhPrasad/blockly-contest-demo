@@ -15,7 +15,7 @@ Blockly.Blocks['maze_move'] = {
   }
 };
 javascriptGenerator['maze_move'] = function(block) {
-     return `console.log('blockly_debug at block_id_${block.id}: move ');\n`;
+     return `console.log('blockly_debug at block_id_${block.id}: move ');window.globalMazeObject.move();\n`;
 }
 
 Blockly.Blocks['maze_turn'] = {
@@ -33,7 +33,7 @@ Blockly.Blocks['maze_turn'] = {
   }
 };
 javascriptGenerator['maze_turn'] = function(block) {
-     return `console.log('blockly_debug at block_id_${block.id}: turn ${block.getFieldValue('dir')} ');\n`;
+     return `console.log('blockly_debug at block_id_${block.id}: turn ${block.getFieldValue('dir')} ');window.globalMazeObject.updateHeading(window.globalMazeObject.heading + ("${block.getFieldValue('dir')}" == "clockwise" ? 1 : -1));\n`;
 }
 
 Blockly.Blocks['console_dbg'] = {
@@ -51,5 +51,5 @@ Blockly.Blocks['console_dbg'] = {
   }
 };
 javascriptGenerator['console_dbg'] = function(block) {
-     return `console.log('blockly_internal_debug_function at block_id_${block.id}: ${block.getFieldValue('dbg_txt')} ');\n`;
+     return `console.log('blockly_debug_function at block_id_${block.id}: ${block.getFieldValue('dbg_txt')} ');\n`;
 }
