@@ -17,7 +17,6 @@
      import workspaceConfiguration from "../lib/workspaceConfig.js";
      import MazeBoard from "../lib/maze";
 
-     var btVal = "";
      var cmaze = new MazeBoard([[0, 0, 0, 0, 0, 0, 0, 0],
      [0, 1, 1, 0, 3, 0, 1, 0],
      [0, 1, 1, 0, 1, 1, 1, 0],
@@ -26,6 +25,8 @@
      [0, 0, 0, 1, 0, 0, 1, 0],
      [0, 2, 1, 1, 1, 0, 1, 0],
      [0, 0, 0, 0, 0, 0, 0, 0]]);
+
+     var btVal = cmaze.__getBoardText();
      cmaze.updateCallback = (function () {btVal = cmaze.__getBoardText()})
 
      const toolbox = blocks;
@@ -94,6 +95,4 @@
 
      .monospace
           font-family: monospace
-
-
 </style>
