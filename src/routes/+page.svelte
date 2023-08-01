@@ -17,6 +17,8 @@
      import workspaceConfiguration from "../lib/workspaceConfig.js";
      import MazeBoard from "../lib/maze";
 
+     import '../vendor/JS-Interpreter/acorn_interpreter'
+
      import { browser } from '$app/environment';
 
      var cmaze = new MazeBoard([[0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,7 +39,20 @@
      var config = workspaceConfiguration;
      config.toolbox = toolbox;
      let workspace;
+
+
      let code = "";
+     javascriptGenerator.STATEMENT_PREFIX = 'window.highlightBlock(%1);\n';
+     javascriptGenerator.addReservedWords('highlightBlock');
+     javascriptGenerator.addReservedWords('code');
+     if (browser) window.LoopTrap = 1000;
+     javascriptGenerator.INFINITE_LOOP_TRAP = 'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
+
+     function highlightBlock(id) {
+          workspace.highlightBlock(id);
+     }
+
+     if (browser) window.highlightBlock = highlightBlock;
 
      function onChange() {
           try {

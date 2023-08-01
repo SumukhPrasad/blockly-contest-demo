@@ -7,6 +7,7 @@ const workspaceConfiguration = {
      horizontalLayout : true, 
      toolboxPosition : 'end',
      renderer: "zelos",
+     theme: "zelos",
      grid : {
           spacing : 20, 
           length : 3, 
