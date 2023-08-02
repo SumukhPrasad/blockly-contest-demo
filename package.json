@@ -19,6 +19,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"acorn": "^8.10.0",
 		"blockly": "^10.0.2",
 		"svelte-blockly": "^0.1.0"
 	}

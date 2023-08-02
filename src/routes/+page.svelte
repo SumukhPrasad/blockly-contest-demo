@@ -17,8 +17,6 @@
      import workspaceConfiguration from "../lib/workspaceConfig.js";
      import MazeBoard from "../lib/maze";
 
-     import '../vendor/JS-Interpreter/acorn_interpreter'
-
      import { browser } from '$app/environment';
 
      var cmaze = new MazeBoard([[0, 0, 0, 0, 0, 0, 0, 0],
@@ -57,6 +55,8 @@
      function onChange() {
           try {
                code = javascriptGenerator.workspaceToCode(workspace);
+               //var myInterpreter = new acorn.Interpreter(code);
+               //myInterpreter.run();
           } catch (_err) {
                // Happens e.g. when deleting a function that is used somewhere.
                // Blockly will quickly recover from this, so it's not a big deal.
