@@ -78,6 +78,11 @@ let blocks = {
         kind: "block",
         type: "maze_move",
       },
+
+      {
+        "kind": "block",
+        "type": "maze_if",
+      },
     ],
   },
   {

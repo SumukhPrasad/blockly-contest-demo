@@ -44,6 +44,27 @@ class MazeBoard {
 		return true;
 	}
 
+	doesPathExist(val) {
+		var expectedHeading = ((this.heading+val % 4) ? this.heading+val % 4 : 4)
+		console.log(expectedHeading)
+		switch (expectedHeading) {
+			case 1:
+				return this.__isMoveLegal([this.current_c[0] - 1, this.current_c[1]]);
+			case 4:
+				return this.__isMoveLegal([this.current_c[0], this.current_c[1] - 1]);
+			case 2:
+				return this.__isMoveLegal([this.current_c[0], this.current_c[1] + 1]);
+			case 3:
+				return this.__isMoveLegal([this.current_c[0] + 1, this.current_c[1]]);
+			}
+
+		
+	}
+
+	__isMoveLegal(expectedMove) {
+		return __isArrayInArray(this.__computeLegalMoves(), expectedMove)
+	}
+
 	__getBoardText() {
 		var textRepr = '';
 		for (const row of this.current_board_state) {
@@ -135,8 +156,6 @@ class MazeBoard {
 			return [this.current_c[0] + 1, this.current_c[1]];
 		}
 	}
-
-
 
 	__updateState() {
 		this.current_board_state = __copyVar(this.b);

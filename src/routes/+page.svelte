@@ -109,6 +109,27 @@
                               cmaze.move(val);
                          })
                     );
+
+                    interpreter.setProperty(
+                         scope, 'path_ahead_exists',
+                              interpreter.createNativeFunction(val => {
+                              return cmaze.doesPathExist(0);
+                         })
+                    );
+
+                    interpreter.setProperty(
+                         scope, 'path_to_right_exists',
+                              interpreter.createNativeFunction(val => {
+                              return cmaze.doesPathExist(1);
+                         })
+                    );
+
+                    interpreter.setProperty(
+                         scope, 'path_to_left_exists',
+                              interpreter.createNativeFunction(val => {
+                              return cmaze.doesPathExist(-1);
+                         })
+                    );
                });
 
                var intervalId = setInterval(() => {
