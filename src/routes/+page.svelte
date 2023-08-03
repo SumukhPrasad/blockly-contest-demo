@@ -25,14 +25,13 @@
      });
 
      import '../vendor/JS-Interpreter/interpreter.js';
-     var cmaze = new MazeBoard([[0, 0, 0, 0, 0, 0, 0, 0],
-     [0, 1, 1, 0, 3, 0, 1, 0],
-     [0, 1, 1, 0, 1, 1, 1, 0],
-     [0, 1, 0, 1, 0, 1, 0, 0],
-     [0, 1, 1, 1, 1, 1, 1, 0],
-     [0, 0, 0, 1, 0, 0, 1, 0],
-     [0, 2, 1, 1, 1, 0, 1, 0],
-     [0, 0, 0, 0, 0, 0, 0, 0]]);
+     var cmaze = new MazeBoard([[0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 2, 1, 3, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0]]);
 
      var btVal = cmaze.__getBoardText();
      cmaze.updateCallback = (function () {btVal = cmaze.__getBoardText()});
@@ -130,6 +129,15 @@
                               return cmaze.doesPathExist(-1);
                          })
                     );
+
+                    interpreter.setProperty(
+                         scope, 'has_reached_destination',
+                              interpreter.createNativeFunction(val => {
+                              return cmaze.hasFinishedMaze();
+                         })
+                    );
+
+                    
                });
 
                var intervalId = setInterval(() => {

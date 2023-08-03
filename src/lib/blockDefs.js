@@ -23,6 +23,54 @@ javascriptGenerator['maze_if'] = function(block) {
      return code;
 };
 
+Blockly.Blocks['maze_if_else'] = {
+     init: function () {
+          this.appendDummyInput()
+               .appendField(new Blockly.FieldLabelSerializable("if path"), "NAME_if")
+               .appendField(new Blockly.FieldDropdown([["ahead", "path_ahead"], ["to left", "path_to_left"], ["to right", "path_to_right"]]), "DIR")
+               .appendField(new Blockly.FieldLabelSerializable("exists"), "NAME_exists");
+          this.appendStatementInput("DO")
+               .setCheck(null);
+          this.appendDummyInput()
+               .appendField(new Blockly.FieldLabelSerializable("else"), "NAME_else");
+           this.appendStatementInput("DO_else")
+               .setCheck(null);
+
+          this.setPreviousStatement(true, null);
+          this.setNextStatement(true, null);
+          this.setColour("#5CA699");
+          this.setTooltip("");
+          this.setHelpUrl("");
+     }
+};
+javascriptGenerator['maze_if_else'] = function(block) {
+     var statements_do = javascriptGenerator.statementToCode(block, 'DO');
+     var statements_doelse = javascriptGenerator.statementToCode(block, 'DO_else');
+     var code = `dbg_print('blockly_debug at block_id_${block.id}: ${block.getFieldValue('DIR')}'); if (${block.getFieldValue('DIR')}_exists()) {${statements_do}} else {${statements_doelse}}\n`;
+     return code;
+};
+
+Blockly.Blocks['maze_until'] = {
+     init: function () {
+          this.appendDummyInput()
+               .appendField(new Blockly.FieldLabelSerializable("repeat until 🚩 is reached"), "NAME_until");
+          this.appendStatementInput("DO")
+               .setCheck(null)
+               .appendField(new Blockly.FieldLabelSerializable("do"), "NAME_do");
+
+          this.setPreviousStatement(true, null);
+          this.setNextStatement(true, null);
+          this.setColour("#5CA699");
+          this.setTooltip("");
+          this.setHelpUrl("");
+     }
+};
+javascriptGenerator['maze_until'] = function(block) {
+     var statements_do = javascriptGenerator.statementToCode(block, 'DO');
+     var code = `dbg_print('blockly_debug at block_id_${block.id}: while'); while (!has_reached_destination()) {${statements_do}}\n`;
+     return code;
+};
+
 Blockly.Blocks['maze_move'] = {
      init: function () {
           this

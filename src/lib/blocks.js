@@ -1,7 +1,7 @@
 let blocks = {
   "kind": "categoryToolbox",
   "contents": [
-    {
+    /*{
       "kind": "category",
       "name": "Logic",
       "contents": [
@@ -64,7 +64,7 @@ let blocks = {
         "type": "controls_flow_statements"
       }
     ]
-  },
+  },*/
   {
     kind: "category",
     name: "Maze",
@@ -72,16 +72,24 @@ let blocks = {
     contents: [
       {
         kind: "block",
-        type: "maze_turn",
+        type: "maze_move",
       },
       {
         kind: "block",
-        type: "maze_move",
+        type: "maze_turn",
       },
 
       {
         "kind": "block",
         "type": "maze_if",
+      },
+      {
+        "kind": "block",
+        "type": "maze_if_else",
+      },
+      {
+        "kind": "block",
+        "type": "maze_until",
       },
     ],
   },

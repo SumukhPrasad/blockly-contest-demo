@@ -57,9 +57,22 @@ class MazeBoard {
 			case 3:
 				return this.__isMoveLegal([this.current_c[0] + 1, this.current_c[1]]);
 			}
-
-		
 	}
+
+	hasFinishedMaze() {
+		return this.__areArraysEqual(this.__getCoordinates(this.b, 3), this.__getCoordinates(this.current_board_state, 4));
+	}
+
+	__areArraysEqual(a, b) {
+		if (a === b) return true;
+		if (a == null || b == null) return false;
+		if (a.length !== b.length) return false;
+
+		for (var i = 0; i < a.length; ++i) {
+		  if (a[i] !== b[i]) return false;
+		}
+		return true;
+	   }
 
 	__isMoveLegal(expectedMove) {
 		return __isArrayInArray(this.__computeLegalMoves(), expectedMove)
@@ -116,18 +129,18 @@ class MazeBoard {
 		var moves = [];
 
 		//x
-		if (this.b[this.current_c[0]][this.current_c[1] + 1] == 1) {
+		if (this.b[this.current_c[0]][this.current_c[1] + 1]>0) {
 			moves.push([this.current_c[0], this.current_c[1] + 1]);
 		}
-		if (this.b[this.current_c[0]][this.current_c[1] - 1] == 1) {
+		if (this.b[this.current_c[0]][this.current_c[1] - 1]>0) {
 			moves.push([this.current_c[0], this.current_c[1] - 1]);
 		}
 
 		//y
-		if (this.b[this.current_c[0] + 1][this.current_c[1]] == 1) {
+		if (this.b[this.current_c[0] + 1][this.current_c[1]]>0) {
 			moves.push([this.current_c[0] + 1, this.current_c[1]]);
 		}
-		if (this.b[this.current_c[0] - 1][this.current_c[1]] == 1) {
+		if (this.b[this.current_c[0] - 1][this.current_c[1]]>0) {
 			moves.push([this.current_c[0] - 1, this.current_c[1]]);
 		}
 		//console.log(this.b, this.current_board_state, moves)
