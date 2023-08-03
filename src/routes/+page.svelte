@@ -18,7 +18,13 @@
      import MazeBoard from "../lib/maze";
 
      import { browser } from '$app/environment';
+     let acorn;
+     if (browser) window.acorn = acorn;
+     import('acorn').then((res) => {
+          if (browser) window.acorn=res;
+     });
 
+     import '../vendor/JS-Interpreter/interpreter.js';
      var cmaze = new MazeBoard([[0, 0, 0, 0, 0, 0, 0, 0],
      [0, 1, 1, 0, 3, 0, 1, 0],
      [0, 1, 1, 0, 1, 1, 1, 0],
@@ -67,10 +73,60 @@
 
      function execute() {
           try {
-               eval(code)
+               var running = false;
+               workspace.highlightBlock(null);
+
+               var lastBlockToHighlight = null;
+               var myInterpreter = new Interpreter(code, (interpreter, scope) => {
+               interpreter.setProperty(
+                    scope, 'highlightBlock',
+                         interpreter.createNativeFunction(id => {
+                              id = id ? id.toString() : '';
+                              running = false;
+                              workspace.highlightBlock(lastBlockToHighlight);
+                              lastBlockToHighlight = id;
+                         })
+                    );
+                    interpreter.setProperty(
+                         scope, 'dbg_print',
+                              interpreter.createNativeFunction(val => {
+                              val = val ? val.toString() : '';
+                              console.log(val);
+                              })
+                    );
+                    
+                    //maze fns
+                    interpreter.setProperty(
+                         scope, 'updateHeading',
+                              interpreter.createNativeFunction(val => {
+                              val = val ? val : '';
+                              cmaze.updateHeading(val);
+                         })
+                    );
+                    interpreter.setProperty(
+                         scope, 'move',
+                              interpreter.createNativeFunction(val => {
+                              cmaze.move(val);
+                         })
+                    );
+               });
+
+               var intervalId = setInterval(() => {
+                    running = true;
+                    while (running) {
+                         if (!myInterpreter.step()) {
+                              workspace.highlightBlock(lastBlockToHighlight);
+                              clearInterval(intervalId);
+                              setTimeout(() => {
+                                   workspace.highlightBlock(null);
+                              }, 1000);
+                              return;
+                         }
+                    }
+               }, 250);
           } catch (_err) {
                console.error(_err);
-               window.alert('CATASTROPHIC ERROR!'+_err)
+               window.alert('CATASTROPHIC ERROR!\n'+_err)
           }
      }
 </script>

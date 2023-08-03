@@ -29,7 +29,8 @@ class MazeBoard {
 
 
 
-	updateHeading(newHeading) {
+	updateHeading(change) {
+		var newHeading = this.heading+change;
 		this.heading = ((newHeading % 4) ? newHeading % 4 : 4);
 		this.__updateState();
 	}
