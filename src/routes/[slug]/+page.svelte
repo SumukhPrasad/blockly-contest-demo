@@ -334,7 +334,7 @@
      />
 </div>
 <!--<pre>{code}</pre>-->
-<div class="runnerWindow">
+<div class="runnerWindow debug">
      <h2><i>Debug</i></h2>
      <div class="monospace">
      <b>board</b><br />
@@ -371,6 +371,8 @@
           right: 50px
           color: white
           text-shadow: 0px 1px #000
+     .debug
+          opacity: 0.25
 
      .monospace
           font-family: monospace
