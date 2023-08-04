@@ -121,12 +121,72 @@
           [0, 0, 0, 0, 0, 0, 0, 0]],
      ];
 
+     function drawCanvas() {
+          var c = document.getElementById("maze-canvas");
+          var ctx = c.getContext("2d");
+          for (let i = 0; i < cmaze.__getBoard().length; i++) {
+               const row = cmaze.__getBoard()[i];
+               for (let j = 0; j < row.length; j++) {
+                    const tile = row[j];
+                    
+                    ctx.fillStyle = [
+                         "white", 
+                         "grey", 
+                         "grey", 
+                         "lightgreen", 
+                         "grey", 
+                         "grey",
+                         "white", 
+                         "grey"][tile];
+                    ctx.fillRect((j*50), (i*50), 50, 50);
+                    if (tile==2) {
+                         ctx.beginPath();
+                         ctx.arc((j*50)+25, (i*50)+25, 10, 0, 2 * Math.PI, false);
+                         ctx.fillStyle = 'gray';
+                         ctx.fill();
+                         ctx.lineWidth = 5;
+                         ctx.strokeStyle = '#555';
+                         ctx.stroke();
+                    }
+                    if (tile==4) {
+                         ctx.beginPath();
+                         ctx.arc((j*50)+25, (i*50)+25, 10, 0, 2 * Math.PI, false);
+                         ctx.fillStyle = 'green';
+                         ctx.fill();
+                         ctx.lineWidth = 5;
+                         ctx.strokeStyle = '#003300';
+                         ctx.stroke();
+                    }
+                    if (tile==6) {
+                         ctx.beginPath();
+                         ctx.arc((j*50)+25, (i*50)+25, 10, 0, 2 * Math.PI, false);
+                         ctx.fillStyle = '#faa';
+                         ctx.fill();
+                         ctx.lineWidth = 5;
+                         ctx.strokeStyle = '#f55';
+                         ctx.stroke();
+                    }
+                    if (tile==7) {
+                         ctx.beginPath();
+                         ctx.arc((j*50)+25, (i*50)+25, 10, 0, 2 * Math.PI, false);
+                         ctx.fillStyle = 'lightgreen';
+                         ctx.fill();
+                         ctx.lineWidth = 5;
+                         ctx.strokeStyle = 'green';
+                         ctx.stroke();
+                    }
+               }
+          }
+          ctx.stroke();
+     }
+
      import '../../vendor/JS-Interpreter/interpreter.js';
      var cmaze = new MazeBoard(maps[data.slug-1]);
 
      var btVal = cmaze.__getBoardText();
-     cmaze.updateCallback = (function () {btVal = cmaze.__getBoardText()});
-
+     var board = cmaze.__getBoard();
+     cmaze.updateCallback = (function () {btVal = cmaze.__getBoardText(); board=cmaze.__getBoard(); if (browser) drawCanvas();});
+     if (browser) drawCanvas();
      if (browser) window.globalMazeObject = cmaze;
 
      const toolbox = blocks;
@@ -139,7 +199,7 @@
      javascriptGenerator.STATEMENT_PREFIX = 'window.highlightBlock(%1);\n';
      javascriptGenerator.addReservedWords('highlightBlock');
      javascriptGenerator.addReservedWords('code');
-     if (browser) window.LoopTrap = 1000;
+     if (browser) window.LoopTrap = 10;
      javascriptGenerator.INFINITE_LOOP_TRAP = 'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
 
      function highlightBlock(id) {
@@ -151,8 +211,8 @@
      function onChange() {
           try {
                code = javascriptGenerator.workspaceToCode(workspace);
-               //var myInterpreter = new acorn.Interpreter(code);
-               //myInterpreter.run();
+               //var jsInterpreterObj = new acorn.Interpreter(code);
+               //jsInterpreterObj.run();
           } catch (_err) {
                // Happens e.g. when deleting a function that is used somewhere.
                // Blockly will quickly recover from this, so it's not a big deal.
@@ -167,7 +227,7 @@
                workspace.highlightBlock(null);
 
                var lastBlockToHighlight = null;
-               var myInterpreter = new Interpreter(code, (interpreter, scope) => {
+               var jsInterpreterObj = new Interpreter(code, (interpreter, scope) => {
                interpreter.setProperty(
                     scope, 'highlightBlock',
                          interpreter.createNativeFunction(id => {
@@ -234,7 +294,7 @@
                var intervalId = setInterval(() => {
                     running = true;
                     while (running) {
-                         if (!myInterpreter.step()) {
+                         if (!jsInterpreterObj.step()) {
                               workspace.highlightBlock(lastBlockToHighlight);
                               clearInterval(intervalId);
                               setTimeout(() => {
@@ -286,6 +346,13 @@
      <button on:click={() => execute()}>EXECUTE</button>
      </div>
 </div>
+<div class="runnerWindow">
+     <div class="monospace">
+          <canvas id="maze-canvas" width="400px" height="400px"></canvas><br />
+          <button class="run" on:click={() => execute()}>Run blocks</button>
+     </div>
+</div>
+
 
 <style lang="sass">
      .editor 
@@ -314,4 +381,11 @@
           font-weight: bold
           font-family: monospace
           margin-top: 20px
+     .run
+          padding: 10px 15px
+          font-size: 18px
+          border-radius: 16px
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+          border: 1px solid #200
+          background-color: #f55
 </style>

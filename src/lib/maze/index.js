@@ -46,7 +46,6 @@ class MazeBoard {
 
 	doesPathExist(val) {
 		var expectedHeading = ((this.heading+val % 4) ? this.heading+val % 4 : 4)
-		console.log(expectedHeading)
 		switch (expectedHeading) {
 			case 1:
 				return this.__isMoveLegal([this.current_c[0] - 1, this.current_c[1]]);
@@ -76,6 +75,10 @@ class MazeBoard {
 
 	__isMoveLegal(expectedMove) {
 		return __isArrayInArray(this.__computeLegalMoves(), expectedMove)
+	}
+
+	__getBoard() {
+		return this.current_board_state
 	}
 
 	__getBoardText() {
