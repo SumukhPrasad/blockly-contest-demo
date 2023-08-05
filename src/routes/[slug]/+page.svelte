@@ -372,7 +372,7 @@
           color: white
           text-shadow: 0px 1px #000
      .debug
-          opacity: 0.25
+          opacity: 0.5
 
      .monospace
           font-family: monospace
